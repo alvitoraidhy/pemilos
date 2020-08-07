@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<form method="POST" action="/login">
+    {% if errors|length > 0 %}
+        Error!
+        <ul class="errors">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div>
+        {{ form.nis.label }}
+        {{ form.nis(autocomplete="off") }}
+    </div>
+    <div>
+        {{ form.nisn.label }}
+        {{ form.nisn(autocomplete="off") }}
+    </div>
+    {{ form.submit() }}
+</form>
+{% endblock %}
