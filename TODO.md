@@ -1,0 +1,19 @@
+- COMING SOON
+- ADMIN PANEL
+    - Login
+    - Statistics
+    - Students CRUD
+    - Candidates CRUD
+    - Settings
+        - has_started
+        - election_schedule_start
+        - election_schedule_end
+        - result_schedule
+- ELECTION
+    - Schedule Info
+    - Student Verification
+    - Candidates Info
+    - Elect
+- RESULT
+    - Countdown
+    - Result

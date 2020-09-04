@@ -1,1 +1,1 @@
-from .student_login import LoginForm
+from .student_verify import VerifyForm
