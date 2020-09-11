@@ -1,0 +1,54 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Candidates Table{% endblock %}
+{% block header %}Candidates{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Candidates Table</h6>
+    </div>
+    <div class="card-body">
+        <a href="/admin/candidates/create">Create a new entry</a>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Name</th>
+                        <th>Classname</th>
+                        <th>Candidate Number</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Name</th>
+                        <th>Classname</th>
+                        <th>Candidate Number</th>
+                        <th>#</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td><a href="./candidates/{{ row.id }}">{{ row.id }}</a></td>
+                    <td>{{ row.nis }}</td>
+                    <td>{{ row.nisn }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.classname }}</td>
+                    <td>{{ row.candidate_number }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

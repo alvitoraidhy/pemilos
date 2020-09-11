@@ -1,0 +1,53 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Candidates Table{% endblock %}
+{% block header %}Candidates: Read{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-2">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Candidate Info</h6>
+    </div>
+    <div class="card-body text-center">
+        <div class="container py-4">
+            <div class="profile-userpic">
+                <img 
+                    src="{{ row.image }}"
+                    class="rounded-circle img-responsive"
+                    alt="{{ row.name }}"
+                    style="width: 250px;"
+                >
+            </div>
+    
+            <div class="profile-usertitle">
+                <h2 class="mt-3"><strong>{{ row.name }}</strong></h2>
+                <h4>Candidate Number {{ row.candidate_number }}</h4>
+                <div class="profile-userbuttons my-2">
+                    <a href="./{{ row.id}}/edit" class="btn btn-success btn-md" role="button">Edit</a>
+                    <a href="./{{ row.id}}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
+                </div>
+                <div class="card-body text-left w-auto">
+                    <p>
+                        <strong>ID: </strong> {{ row.id }} <br>
+                        <strong>NIS: </strong> {{ row.nis }} <br>
+                        <strong>NISN: </strong> {{ row.nisn }} <br>
+                    </p>
+                    <p>
+                        <strong>Name: </strong> {{ row.name }} <br>
+                        <strong>Class: </strong> {{ row.classname }} <br>
+                        <strong>Image: </strong> {{ row.image }} <br>
+                    </p>
+                    <p>
+                        <strong>Vision:</strong> <br>
+                        {{ row.vision }}
+                    </p>
+                    <p>
+                        <strong>Mission:</strong> <br>
+                        {{ row.mission }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

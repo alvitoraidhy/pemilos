@@ -7,18 +7,19 @@ import config, models, forms, controllers
 app = Sanic("app")
 app.config.from_object(config.classes[os.environ.get('ENV', 'development')])
 
+app.static('/static', app.config.STATIC_DIR)
+app.static(app.config.UPLOAD_URL, app.config.UPLOAD_DIR)
+
 jinja = SanicJinja2(app)
 
 class current:
   app, jinja, models, forms = app, jinja, models, forms
 
 controllers.init(current)
-
-@app.listener('before_server_start')
-async def setup_db(app, loop):
-  register_tortoise(
-    app, db_url=app.config.DB_URL, modules={"models": ["models"]}, generate_schemas=True
-  )
+  
+register_tortoise(
+  app, db_url=app.config.DB_URL, modules={"models": ["models"]}, generate_schemas=True
+)
 
 if __name__ == "__main__":
   app.run(

@@ -2,7 +2,8 @@ from tortoise.models import Model
 from tortoise import fields
 
 class StudentInfoMixin():
-    nis = fields.IntField(pk=True, generated=False)
+    id = fields.IntField(pk=True)
+    nis = fields.IntField()
     nisn = fields.IntField()
     name = fields.CharField(max_length=100)
     classname = fields.CharField(max_length=30)

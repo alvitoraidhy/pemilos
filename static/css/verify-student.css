@@ -1,0 +1,15 @@
+html, body {
+	min-height: 100vh;
+}
+
+body {
+	background-color: #72A0C1;
+}
+
+form {
+	background-color: white;
+}
+
+#logo {
+	height: 250px;
+}

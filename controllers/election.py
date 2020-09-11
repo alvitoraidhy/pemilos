@@ -21,9 +21,13 @@ def init(current):
                 student = await models.Student.filter(nis=int(nis), nisn=int(nisn))
                 if student:
                     session = request.ctx.session
-                    session['nis'] = student.nis
-                    session['name'] = student.name
-                    session['classname'] = student.classname
+
+                    session['student'] = {
+                        'nis': student.nis,
+                        'name': student.name,
+                        'classname': student.classname
+                    }
+                    
                     return response.json("True")
                 errors = ['Wrong NIS or NISN!']
 

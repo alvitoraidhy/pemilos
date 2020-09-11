@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}Create a Candidate{% endblock %}
+{% block header %}Candidates: Create{% endblock %}
+
+{% block body %}
+<form method="POST" action="/admin/candidates/create" enctype="multipart/form-data">
+    {% if errors|length > 0 %}
+        Error!
+        <ul class="errors">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {{ render_field(form.nis, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.nisn, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.name, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.classname, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.candidate_number, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.image, class_="form-control-file", autocomplete="off") }}
+    {{ render_field(form.vision, class_="form-control", autocomplete="off") }}
+    {{ render_field(form.mission, class_="form-control", autocomplete="off") }}
+ 
+    {{ form.submit() }}
+</form>
+{% endblock %}

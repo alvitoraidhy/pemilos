@@ -1,4 +1,5 @@
 from cryptography.fernet import Fernet
+from pathlib import Path
 import os
 
 class BaseConfig:
@@ -8,13 +9,20 @@ class BaseConfig:
 
 class ProductionConfig(BaseConfig):
     APP_ENV = 'production'
-    DB_URL = os.environ.get('DB_URL')
     DEBUG = False
+    DB_URL = os.environ.get('DB_URL')
+    STATIC_DIR = str(Path(__file__).resolve().parent.joinpath('static'))
+    UPLOAD_DIR = str(Path(__file__).resolve().parent.joinpath('uploads'))
+    UPLOAD_URL = '/uploads'
+
 
 class DevelopmentConfig(BaseConfig):
     APP_ENV = 'development'
     DEBUG = True
     DB_URL = 'sqlite://.//development.db'
+    STATIC_DIR = str(Path(__file__).resolve().parent.joinpath('static'))
+    UPLOAD_DIR = str(Path(__file__).resolve().parent.joinpath('uploads-dev'))
+    UPLOAD_URL = '/uploads'
 
 classes = {
     'production': ProductionConfig,

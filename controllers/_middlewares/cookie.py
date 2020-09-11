@@ -4,11 +4,10 @@ from itsdangerous.exc import BadSignature
 import json
 
 def init(current):
-    app, jinja, models, forms = current.app, current.jinja, current.models, current.forms
+    app = current.app
 
     @app.middleware('request')
     async def check_signed_cookies(request):
-        print(json.dumps(request.cookies))
         s = Serializer(app.config.SECRET_KEY)
         session = request.cookies.get('session')
         if session:
@@ -25,5 +24,6 @@ def init(current):
         s = Serializer(app.config.SECRET_KEY)
         try:
             response.cookies['session'] = s.dumps(request.ctx.session)
+            response.cookies['session']['max-age'] = 86400
         except AttributeError:
             pass
