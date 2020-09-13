@@ -4,7 +4,6 @@ import aiofiles, os
 async def write_file(path, body):
     async with aiofiles.open(path, 'wb') as f:
         await f.write(body)
-    f.close()
 
 def valid_file_size(file_body):
     if len(file_body) < 10485760:

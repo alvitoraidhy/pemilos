@@ -23,12 +23,12 @@
                 <h2 class="mt-3"><strong>{{ row.name }}</strong></h2>
                 <h4>Candidate Number {{ row.candidate_number }}</h4>
                 <div class="profile-userbuttons my-2">
-                    <a href="./{{ row.id}}/edit" class="btn btn-success btn-md" role="button">Edit</a>
-                    <a href="./{{ row.id}}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
+                    <a href="./{{ row.candidate_number }}/edit" class="btn btn-success btn-md" role="button">Edit</a>
+                    <a href="./{{ row.candidate_number }}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
                 </div>
                 <div class="card-body text-left w-auto">
                     <p>
-                        <strong>ID: </strong> {{ row.id }} <br>
+                        <strong>Candidate Number: </strong> {{ row.candidate_number }} <br>
                         <strong>NIS: </strong> {{ row.nis }} <br>
                         <strong>NISN: </strong> {{ row.nisn }} <br>
                     </p>

@@ -1,0 +1,88 @@
+{% extends 'admin/base.html' %}
+
+{% macro render_field(field) %}
+    {{ field(class_="form-control", autocomplete="off", placeholder=field.label.text) }}
+{% endmacro %}
+
+{% block title %}Students Table{% endblock %}
+{% block header %}Students{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Students Table</h6>
+    </div>
+    <div class="card-body">
+        <a href="/admin/students/create">Create a new entry</a> <br>
+        <a href="/admin/students/import-csv">Import CSV</a> <br>
+        <a href="/admin/students/export-csv">Export CSV</a>
+        <div class="table table-responsive p-3">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Name</th>
+                        <th>Classname</th>
+                        <th>Has Voted</th>
+                        <th>#</th>
+                    </tr>
+                    <tr>
+                        <form method="GET" action="/admin/students">
+                            <th>{{ render_field(form.id) }}</th>
+                            <th>{{ render_field(form.nis) }}</th>
+                            <th>{{ render_field(form.nisn) }}</th>
+                            <th>{{ render_field(form.name) }}</th>
+                            <th>{{ render_field(form.classname) }}</th>
+                            <th>{{ render_field(form.has_chosen_id) }}</th>
+                            <th>
+                                <button class="btn btn-primary" type="submit">Find</button>
+                            </th>
+                        </form>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
+                        <th>Name</th>
+                        <th>Classname</th>
+                        <th>Has Voted</th>
+                        <th>#</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td><a href="./students/{{ row.id }}">{{ row.id }}</a></td>
+                    <td>{{ row.nis }}</td>
+                    <td>{{ row.nisn }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.classname }}</td>
+                    <td>
+                        {% if row.has_chosen %}
+                        Yes ({{ row.has_chosen_id }})
+                        {% else %}
+                        No 
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="./students/{{ row.id}}/edit" class="btn btn-success btn-md" role="button">Edit</a>
+                        <a href="./students/{{ row.id}}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if previous %}
+        <a href="?{{ previous }}" class="btn btn-info btn-md" role="button">Previous</a>
+        {% endif %}
+        {% if next %}
+        <a href="?{{ next }}" class="btn btn-info btn-md" role="button">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

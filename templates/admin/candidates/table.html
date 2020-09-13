@@ -10,40 +10,40 @@
     </div>
     <div class="card-body">
         <a href="/admin/candidates/create">Create a new entry</a>
-        <div class="table-responsive">
+        <div class="table table-responsive p-3">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>NIS</th>
-                        <th>NISN</th>
+                        <th>Candidate Number</th>
                         <th>Name</th>
                         <th>Classname</th>
-                        <th>Candidate Number</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
                         <th>#</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>NIS</th>
-                        <th>NISN</th>
+                        <th>Candidate Number</th>
                         <th>Name</th>
                         <th>Classname</th>
-                        <th>Candidate Number</th>
+                        <th>NIS</th>
+                        <th>NISN</th>
                         <th>#</th>
                     </tr>
                 </tfoot>
                 <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td><a href="./candidates/{{ row.id }}">{{ row.id }}</a></td>
-                    <td>{{ row.nis }}</td>
-                    <td>{{ row.nisn }}</td>
+                    <td><a href="./candidates/{{ row.candidate_number }}">{{ row.candidate_number }}</a></td>
                     <td>{{ row.name }}</td>
                     <td>{{ row.classname }}</td>
-                    <td>{{ row.candidate_number }}</td>
-                    <td></td>
+                    <td>{{ row.nis }}</td>
+                    <td>{{ row.nisn }}</td>
+                    <td>
+                        <a href="./candidates/{{ row.candidate_number }}/edit" class="btn btn-success btn-md" role="button">Edit</a>
+                        <a href="./candidates/{{ row.candidate_number }}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>

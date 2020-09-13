@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Voting Berhasil{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="vh-100 d-flex justify-content-center align-content-center">
+    <div class="mx-auto my-auto text-center">
+        <h1 class="h3 mb-4">Tidak bisa mengikuti pemilihan lagi</h1>
+        <a href="/" role="button" class="btn btn-lg btn-primary">Kembali ke halaman utama</a>
+    </div>
+</div>
+{% endblock %}

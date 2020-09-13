@@ -6,127 +6,154 @@
 {% block body %}
 <!-- Content Row -->
 <div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Students</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">40000</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-users fa-2x text-gray-300"></i>
-            </div>
+  <!-- Total Students -->
+  <div class="col-xl-4 col-md-4 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Students</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-students">Loading...</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-users fa-2x text-gray-300"></i>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Has Voted</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">1000</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-check sign fa-2x text-gray-300"></i>
-            </div>
+  <!-- Has Voted -->
+  <div class="col-xl-4 col-md-4 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-uppercase mb-1">Has Voted</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800" id="has-voted">Loading...</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-check sign fa-2x text-gray-300"></i>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Hasn't Voted</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">1000</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-question fa-2x text-gray-300"></i>
-            </div>
+  <!-- Hasn't Voted -->
+  <div class="col-xl-4 col-md-4 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-uppercase mb-1">Hasn't Voted</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800" id="hasnt-voted">Loading...</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-question fa-2x text-gray-300"></i>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-warning shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Remaining Time</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">00:00:00</div>
+</div>
+
+<!-- Election and Result Status -->
+<div class="row">
+  <div class="col-xl-6 col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Status</h6>
+      </div>
+      <div class="card-body row">
+        <div class="col-6">
+          <div class="card shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="h5 font-weight-bold text-gray-800">Election</div>
+                  <div class="text-sm font-weight-bold mb-1">
+                    Status: <span id="election-status">Loading...</span> <br>
+                    Start: <span id="election-start">Loading...</span> <br>
+                    End: <span id="election-end">Loading...</span> <br>
+                  </div>
+                  <div id="election-countdown"></div>
+                </div>
+              </div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="h5 font-weight-bold text-gray-800">Result</div>
+                  <div class="text-sm font-weight-bold mb-1">
+                    Status: <span id="result-status">Loading...</span> <br>
+                    Start: <span id="result-start">Loading...</span> <br>
+                    End: <span id="result-end">Loading...</span> <br>
+                  </div>
+                  <div id="result-countdown"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  
+  <div class="col-xl-6 col-lg-6">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Result</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="chart-pie pb-2">
+          <canvas id="resultChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
-<!-- Area Chart -->
-<div class="col-xl-8 col-lg-7">
+  <!-- Statistics -->
+  <div class="col-xl-12">
     <div class="card shadow mb-4">
-        <!-- Project Card Example -->
-    <div class="card shadow mb-4">
+      <div class="card shadow mb-4">
         <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Who Has Voted</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Who Has Voted</h6>
         </div>
         <div class="card-body">
-        <h4 class="small font-weight-bold">Class X <span class="float-right">20%</span></h4>
-        <div class="progress mb-4">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+          <h4 class="small font-weight-bold">Class X <span class="float-right" id="class-x-text">Loading...</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0"
+              aria-valuemin="0" aria-valuemax="100" id="class-x-bar"></div>
+          </div>
+          <h4 class="small font-weight-bold">Class XI <span class="float-right" id="class-xi-text">Loading...</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0"
+              aria-valuemin="0" aria-valuemax="100" id="class-xi-bar"></div>
+          </div>
+          <h4 class="small font-weight-bold">Class XII <span class="float-right" id="class-xii-text">Loading...</span></h4>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+              aria-valuemax="100" id="class-xii-bar"></div>
+          </div>
         </div>
-        <h4 class="small font-weight-bold">Class XI <span class="float-right">40%</span></h4>
-        <div class="progress mb-4">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <h4 class="small font-weight-bold">Class XII <span class="float-right">60%</span></h4>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        </div>
+      </div>
     </div>
-    </div>
+  </div>
 </div>
 
-<!-- Pie Chart -->
-<div class="col-xl-4 col-lg-5">
-    <div class="card shadow mb-4">
-    <!-- Card Header - Dropdown -->
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Result</h6>
-    </div>
-    <!-- Card Body -->
-    <div class="card-body">
-        <div class="chart-pie pb-2">
-        <canvas id="myPieChart"></canvas>
-        </div>
-        <div class="mt-4 text-center small">
-        <span class="mr-2">
-            <i class="fas fa-circle text-primary"></i> Direct
-        </span>
-        <span class="mr-2">
-            <i class="fas fa-circle text-success"></i> Social
-        </span>
-        <span class="mr-2">
-            <i class="fas fa-circle text-info"></i> Referral
-        </span>
-        </div>
-    </div>
-    </div>
-</div>
-</div>
+<!-- Page level plugins -->
+<script src="/static/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="/static/js/dashboard/statistics.js"></script>
 {% endblock %}

@@ -2,11 +2,11 @@
 
 {% from "_formhelpers.html" import render_field %}
 
-{% block title %}Create a Candidate{% endblock %}
-{% block header %}Candidates: Create{% endblock %}
+{% block title %}Edit a Candidate{% endblock %}
+{% block header %}Candidates: Edit{% endblock %}
 
 {% block body %}
-<form method="POST" action="/admin/candidates/{{ row.id }}/edit" enctype="multipart/form-data">
+<form method="POST" action="/admin/candidates/{{ row.candidate_number }}/edit" enctype="multipart/form-data">
     {% if errors|length > 0 %}
         Error!
         <ul class="errors">

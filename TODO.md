@@ -5,10 +5,10 @@
     - Students CRUD
     - Candidates CRUD
     - Settings
-        - has_started
         - election_schedule_start
         - election_schedule_end
-        - result_schedule
+        - result_schedule_start
+        - result_schedule_end
 - ELECTION
     - Schedule Info
     - Student Verification

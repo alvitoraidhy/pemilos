@@ -1,10 +1,58 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html class="h-100">
+    <head>
+        <!-- Standard Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-{% block title %}Home{% endblock %}
+        <!-- Site Properties -->
+        <title>PEMILOS SMAN 8 Bandung</title>
 
-{% block body %}
-<h1>Index</h1>
-<nav>
-    <a href="/election">Election</a>
-</nav>
-{% endblock %}
+        <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="/static/css/index.css" rel="stylesheet">
+    </head>
+    <body class="h-100">
+        <div class="h-100 w-100 position-absolute" id="layer-1">
+            <div class="col-6 north west block layer-1"></div>
+            <div class="col-6 north east block layer-1"></div>
+            <div class="col-6 south east block layer-1"></div>
+            <div class="col-6 south west block layer-1"></div>
+        </div>
+        <div class="h-100 w-100 position-absolute" id="layer-2">
+            <div class="col-6 north west block layer-2"></div>
+            <div class="col-6 north east block layer-2"></div>
+            <div class="col-6 south east block layer-2"></div>
+            <div class="col-6 south west block layer-2"></div>
+        </div>
+        <div class="w-100 h-100 position-absolute d-flex">
+            <div class="mx-auto my-auto p-4" id="box">
+                <h1 class="h3 font-weight-bold text-center">PEMILOS 2020</h1>
+                <div class="row">
+                    <div class="col-auto p-4 mx-auto">
+                        <div class="text-center">
+                            <h2 class="h5 text-center" id="election-text">Pemilihan</h2>
+                            <a href="/election/verification" class="h5 d-none" id="election-link" role="button">Pemilihan</a>
+                        </div>
+                        Status: <span id="election-status">Loading...</span> <br>
+                        Mulai: <span id="election-start">Loading...</span> <br>
+                        Selesai: <span id="election-end">Loading...</span> <br>
+                        Waktu Tersisa: <span id="election-remaining-time">Loading...</span> <br>
+                    </div>
+                    <div class="col-auto p-4 mx-auto">
+                        <div class="text-center">
+                            <h2 class="h5 text-center" id="result-text">Pengumuman</h2>
+                            <a href="/election/result" class="h5 d-none" id="result-link" role="button">Pengumuman</a>
+                        </div>
+                        Status: <span id="result-status">Loading...</span> <br>
+                        Mulai: <span id="result-start">Loading...</span> <br>
+                        Selesai: <span id="result-end">Loading...</span> <br>
+                        Waktu Tersisa: <span id="result-remaining-time">Loading...</span> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Voting Berhasil{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="vh-100 d-flex justify-content-center align-content-center p-5">
+    <div class="mx-auto my-auto text-center">
+        <h1 class="h3" class="mb-5">
+            Hasil Pemilihan Calon Ketua OSIS SMAN&nbsp8&nbspBandung <br>
+            Tahun 2020
+        </h1>
+        <hr>
+        <div class="mt-5 p-3" style="height: 75vw;max-height: 400px;">
+            <canvas id="resultChart"></canvas>
+        </div>
+    </div>
+</div>
+<!-- Page level plugins -->
+<script src="/static/vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="/static/js/dashboard/statistics.js"></script>
+{% endblock %}

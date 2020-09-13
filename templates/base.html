@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% block head %}
         <!-- Standard Meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,6 +9,7 @@
 
         <!-- Site Properties -->
         <title>{% block title %}{% endblock %} | PEMILOS SMAN 8 Bandung</title>
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}

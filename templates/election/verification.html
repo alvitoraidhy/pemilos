@@ -1,25 +1,48 @@
 {% extends 'base.html' %}
 
 {% block title %}Login{% endblock %}
+{% block head %}
+    {{ super() }}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/verify-student.css">
+{% endblock %}
+
 
 {% block body %}
-<form method="POST" action="/login">
-    {% if errors|length > 0 %}
-        Error!
-        <ul class="errors">
-            {% for error in errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div>
-        {{ form.nis.label }}
-        {{ form.nis(autocomplete="off") }}
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container-fluid p-5">
+        <div class="row justify-content-center">
+          <div class="mb-4">
+            <div class="d-flex align-items-center mb-1">
+              <img class="mx-auto" id="logo" src="/static/img/logo.png">
+            </div>
+            <div class="d-flex align-items-center">
+              <form method="POST" action="/election/verification" class="mx-auto p-3 text-center">
+                {% if errors|length > 0 %}
+                    <span class="text-danger">Error!</span>
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <h1 class="h4 mb-3 font-weight-normal">Verifikasi Identitas Siswa</h1>
+                <div class="form-group">
+                    {{ form.nis.label(class_="sr-only") }}
+                    {{ form.nis(class_="form-control", placeholder=form.nis.label.text, autocomplete="off") }}
+                </div>
+                <div class="form-group">
+                    {{ form.nisn.label(class_="sr-only") }}
+                    {{ form.nisn(class_="form-control", placeholder=form.nisn.label.text, autocomplete="off") }}
+                </div>
+                <button class="btn btn-md btn-primary btn-block mt-3" type="submit">Konfirmasi</button>
+              </form>
+            </div>
+          </div>
+        </div>
     </div>
-    <div>
-        {{ form.nisn.label }}
-        {{ form.nisn(autocomplete="off") }}
-    </div>
-    {{ form.submit() }}
-</form>
+</div>
 {% endblock %}

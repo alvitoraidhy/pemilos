@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v4.1.1">
+  <title>Signin Template · Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+
+  <!-- Page CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/css/start.css">
+</head>
+
+<body>
+    <div class="" id="content">
+        <div class="container-fluid">
+            <div class="row align-content-center min-vh-100">
+                <div class="col-12 py-3 ribbon"></div>
+                <div class="col-12 jumbotron m-0 shadow">
+                    <div class="ribbon text-center py-1 mb-3"><h1>PEMILOS 2020</h1></div>
+                    <p class="">
+                        Silahkan baca terlebih dahulu visi dan misi setiap calon. Jika sudah menentukan pilihan, klik tombol 'Pilih'.
+                    </p>
+                    <hr class="my-4">
+                    <p class="text-info">Hubungi pihak administrator jika mengalami kendala.</p>
+
+                    {% if errors|length > 0 %}
+                    <span class="text-danger">Error!</span>
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="col-12 py-2 ribbon"></div>
+                {% for candidate in candidates %}
+                <div class="col-lg-4 col-md-12 d-flex p-5 candidate-block">
+                    <div class="row mx-auto my-auto justify-content-center text-center">
+                        <div class="col-auto d-flex">
+                            <div class="my-auto">
+                                <img 
+                                    src="{{ candidate.image }}"
+                                    class="rounded-circle img-responsive shadow"
+                                    alt="{{ candidate.name }}"
+                                    style="width: 200px;"
+                                >
+                            </div>
+                        </div>
+                
+                        <div class="col-auto d-flex">
+                            <div class="my-auto">
+                                <h2 class="h4 mt-3 font-weight-bold candidate-name">{{ candidate.name }}</h2>
+                                <h3 class="h5 font-weight-bold candidate-classname">{{ candidate.classname }}</h3>
+                                <h3 class="h5 candidate-number">Caketos Nomor Urut {{ candidate.candidate_number }}</h3>
+                                <div class="candidates-buttons mt-3">
+                                    <button class="btn btn-info btn-md font-weight-bold shadow" data-toggle="modal" data-target="#candidate-{{ candidate.candidate_number }}">Visi / Misi</button>
+                                    <button class="btn btn-success btn-md font-weight-bold shadow" 
+                                        onclick="
+                                            document.getElementById(`form-candidate-id`).value = '{{ candidate.candidate_number }}';
+                                            document.getElementById(`election-form`).submit();
+                                        "
+                                    >Pilih</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-12 py-2 ribbon mb-5"></div>
+                <div class="col-12 d-flex justify-content-around mt-5 py-2 shadow ribbon">
+                    <h5 class="m-0">Made by 8ICT (2020)</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for candidate in candidates %}
+    <div class="modal fade" id="candidate-{{ candidate.candidate_number }}" tabindex="-1" role="dialog" aria-labelledby="candidate-1-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title font-weight-bold" id="candidate-1-title">{{ candidate.name }} <sub>- Caketos Nomor Urut {{candidate.candidate_number}}</sub></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <h4><u>Visi:</u></h4>
+                    <p id="candidate-1-vision">
+                        {{ candidate.vision }}
+                    </p>
+                    <h4><u>Misi:</u></h4>
+                    <p id="candidate-1-vision">
+                        {{ candidate.mission }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <form method="POST" action="/election/start" class="d-none" id="election-form">
+        {{ form.has_chosen_id(id="form-candidate-id") }}
+    </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}Import CSV{% endblock %}
+{% block header %}Students: Import CSV{% endblock %}
+
+{% block body %}
+<h2>Instructions</h2>
+<p>
+    Please set up your columns as the following (without headers): <br>
+    <em class="text-info">nis, nisn, name, class, chosen_candidate_id</em>
+</p>
+{% if result %}
+<strong class="text-success">{{ result }}</strong>
+{% endif %}
+<form method="POST" action="/admin/students/import-csv" enctype="multipart/form-data">
+    {% if errors|length > 0 %}
+    <strong class="text-danger">Error!</strong>
+    <ul class="errors">
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {{ render_field(form.csv, class_="form-control-file", autocomplete="off", required=True) }}
+
+    {{ form.submit() }}
+</form>
+{% endblock %}

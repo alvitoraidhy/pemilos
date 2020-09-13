@@ -5,6 +5,7 @@ import os
 class BaseConfig:
     APP_PORT = os.environ.get('PORT', 8000)
     APP_HOST = os.environ.get('HOST', '0.0.0.0')
+    APP_CONFIG_FILE = str(Path(__file__).resolve().parent.joinpath('app_config.ini'))
     SECRET_KEY = os.environ.get('SECRET_KEY')  or Fernet.generate_key()
 
 class ProductionConfig(BaseConfig):

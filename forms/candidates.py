@@ -22,4 +22,3 @@ class EditForm(CreateForm):
 class DeleteForm(Form):
     confirmation = BooleanField("Are you sure you want to delete this row?")
     submit = SubmitField('Submit')
-    pass

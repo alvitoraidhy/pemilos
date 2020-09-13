@@ -1,0 +1,36 @@
+body {
+    background-color: rgba(0,0,0,.15);
+}
+
+.ribbon {
+    background-color: #056674;
+    color: #e0ece4;
+    z-index: 10;
+}
+
+.ribbon > h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 1000;
+}
+
+.candidate-name {
+    color: #ff4b5c;
+}
+
+.candidate-number {
+    color: #056674;
+}
+
+.candidate-block {
+    transition: 0.3s;
+    border: 1px dashed black;
+    background-color: #bfe7d7;
+    z-index: 0;
+}
+
+.candidate-block:hover {
+    background-color: #e0ece7;
+    box-shadow: 0px 0px 4px 2px black;
+    z-index: 1;
+  }

@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}Delete a Student{% endblock %}
+{% block header %}Students: Delete{% endblock %}
+
+{% block body %}
+<h2 class="mt-3"><strong>{{ row.name }}</strong></h2>
+<h4>{{ row.classname }}</h4>
+<form method="POST" action="/admin/students/{{ row.id }}/delete" class="">
+    <div class="form-group">
+        <div class="form-check">
+            {{ form.confirmation(class_="form-check-input") }}
+            {{ form.confirmation.label(class_="form-check-label") }}
+        </div>
+    </div>
+
+    {{ form.submit() }}
+</form>
+<div class="card-body text-left w-auto">
+    <p>
+        <strong>ID: </strong> {{ row.id }} <br>
+        <strong>NIS: </strong> {{ row.nis }} <br>
+        <strong>NISN: </strong> {{ row.nisn }} <br>
+    </p>
+    <p>
+        <strong>Name: </strong> {{ row.name }} <br>
+        <strong>Class: </strong> {{ row.classname }} <br>
+        <strong>Has Chosen: </strong> {{ row.has_chosen }} <br>
+    </p>
+</div>
+{% endblock %}
