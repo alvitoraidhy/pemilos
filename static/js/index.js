@@ -1,4 +1,4 @@
-const pemilos_url = 'http://localhost:8000'
+const pemilos_url = 'http://pemilos.sman8bdg.sch.id'
 
 function httpGetAsync(theUrl, callback)
 {
