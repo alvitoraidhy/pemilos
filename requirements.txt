@@ -1,5 +1,8 @@
 sanic
 sanic_jinja2
+cffi
+wtforms
+itsdangerous
 werkzeug
 
 asyncpg
