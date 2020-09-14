@@ -37,5 +37,6 @@ if __name__ == "__main__":
     host=app.config.APP_HOST,
     port=app.config.APP_PORT,
     debug=app.config.DEBUG,
-    workers=app.config.WORKERS
+    workers=app.config.WORKERS,
+    access_log=False
   )

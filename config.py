@@ -7,6 +7,7 @@ class BaseConfig:
     APP_HOST = os.environ.get('HOST', '0.0.0.0')
     APP_CONFIG_FILE = str(Path(__file__).resolve().parent.joinpath('app_config.ini'))
     SECRET_KEY = os.environ.get('SECRET_KEY') or Fernet.generate_key()
+    FORWARDED_SECRET = SECRET_KEY
     WORKERS = int(os.environ.get('WORKERS', 1))
 
 class ProductionConfig(BaseConfig):
