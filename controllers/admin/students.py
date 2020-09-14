@@ -158,11 +158,15 @@ def init(current):
                     if len(file_body) < (5 * 1024 * 1024):
                         csv_reader = csv.reader(file_body.decode("utf-8").splitlines(), delimiter=',')
                         success_insert = 0
+                        i = 0
                         for row in csv_reader:
                             if i > 0:
                                 try:
                                     formatted_row = [x.strip() for x in row]
                                     data = { csv_format[x]: formatted_row[x] for x in range(len(csv_format)) }
+
+                                    if not data['has_chosen_id']: data['has_chosen_id'] = None
+                                    
                                     new_student = models.Student(**data)
                                     new_student.set_password(data['password'])
                                     await new_student.save()
