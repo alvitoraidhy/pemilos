@@ -157,18 +157,18 @@ def init(current):
                     # 5 MB limit
                     if len(file_body) < (5 * 1024 * 1024):
                         csv_reader = csv.reader(file_body.decode("utf-8").splitlines(), delimiter=',')
-                        i = 1
                         success_insert = 0
                         for row in csv_reader:
-                            try:
-                                formatted_row = [x.strip() for x in row]
-                                data = { csv_format[x]: formatted_row[x] for x in range(len(csv_format)) }
-                                new_student = models.Student(**data)
-                                new_student.set_password(data['password'])
-                                await new_student.save()
-                                success_insert += 1
-                            except Exception as e:
-                                errors.append(f'row {i}: {repr(e)}')
+                            if i > 0:
+                                try:
+                                    formatted_row = [x.strip() for x in row]
+                                    data = { csv_format[x]: formatted_row[x] for x in range(len(csv_format)) }
+                                    new_student = models.Student(**data)
+                                    new_student.set_password(data['password'])
+                                    await new_student.save()
+                                    success_insert += 1
+                                except Exception as e:
+                                    errors.append(f'row {i}: {repr(e)}')
                             
                             i += 1
                         
