@@ -164,6 +164,7 @@ def init(current):
                                 formatted_row = [x.strip() for x in row]
                                 data = { csv_format[x]: formatted_row[x] for x in range(len(csv_format)) }
                                 new_student = models.Student(**data)
+                                new_student.set_password(data['password'])
                                 await new_student.save()
                                 success_insert += 1
                             except Exception as e:
