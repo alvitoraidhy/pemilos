@@ -5,7 +5,6 @@ from wtforms import (
 
 class CreateForm(Form):
     nis = IntegerField('Nomor Induk Siswa', [validators.InputRequired()])
-    nisn = IntegerField('Nomor Induk Siswa Nasional', [validators.InputRequired()])
     name = StringField('Name', [validators.InputRequired()])
     classname = StringField('Classname', [validators.InputRequired()])
 

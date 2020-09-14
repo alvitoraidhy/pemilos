@@ -1,19 +1,24 @@
 from wtforms import (
-    Form, StringField, PasswordField, TextAreaField, IntegerField, FileField, BooleanField, SelectField,
+    Form, StringField, PasswordField, IntegerField, FileField, BooleanField, SelectField,
     SubmitField, validators
 )
 
 class FindForm(Form):
     id = IntegerField('ID')
     nis = IntegerField('NIS')
-    nisn = IntegerField('NISN')
     name = StringField('Name')
+    grade = SelectField('Grade', coerce=int, 
+        choices=[
+            (10, 'X'),
+            (11, 'XI'),
+            (12, 'XI')
+        ]
+    )
     classname = StringField('Classname')
-    has_chosen_id = SelectField('Candidate Number', coerce=int, choices=[(0, '-')])
+    has_chosen_id = SelectField('Candidate Number', choices=[('all', 'All'), ('any', 'Yes'), ('none','No')], default='all')
 
 class CreateForm(Form):
     nis = IntegerField('Nomor Induk Siswa', [validators.InputRequired()])
-    nisn = IntegerField('Nomor Induk Siswa Nasional', [validators.InputRequired()])
     name = StringField('Name', [validators.InputRequired()])
     grade = SelectField('Grade', coerce=int, 
         choices=[
@@ -23,6 +28,7 @@ class CreateForm(Form):
         ]
     )
     classname = StringField('Classname', [validators.InputRequired()])
+    password = PasswordField('Password')
     
     has_chosen_id = SelectField('Candidate Number', coerce=int, choices=[(0, '-')])
     

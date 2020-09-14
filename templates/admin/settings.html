@@ -20,6 +20,9 @@
 {% block header %}Settings{% endblock %}
 
 {% block body %}
+<div class="mb-4">
+    Current server time: {{ now }} <br>
+</div>
 <form method="POST" action="/admin/settings">
     {% if errors|length > 0 %}
     <strong class="text-danger">Error!</strong>

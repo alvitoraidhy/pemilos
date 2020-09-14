@@ -15,15 +15,14 @@
     <div class="card-body">
         <a href="/admin/students/create">Create a new entry</a> <br>
         <a href="/admin/students/import-csv">Import CSV</a> <br>
-        <a href="/admin/students/export-csv">Export CSV</a>
         <div class="table table-responsive p-3">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>NIS</th>
-                        <th>NISN</th>
                         <th>Name</th>
+                        <th>Grade</th>
                         <th>Classname</th>
                         <th>Has Voted</th>
                         <th>#</th>
@@ -32,8 +31,8 @@
                         <form method="GET" action="/admin/students">
                             <th>{{ render_field(form.id) }}</th>
                             <th>{{ render_field(form.nis) }}</th>
-                            <th>{{ render_field(form.nisn) }}</th>
                             <th>{{ render_field(form.name) }}</th>
+                            <th>{{ render_field(form.grade) }}</th>
                             <th>{{ render_field(form.classname) }}</th>
                             <th>{{ render_field(form.has_chosen_id) }}</th>
                             <th>
@@ -46,8 +45,8 @@
                     <tr>
                         <th>ID</th>
                         <th>NIS</th>
-                        <th>NISN</th>
                         <th>Name</th>
+                        <th>Grade</th>
                         <th>Classname</th>
                         <th>Has Voted</th>
                         <th>#</th>
@@ -58,8 +57,8 @@
                 <tr>
                     <td><a href="./students/{{ row.id }}">{{ row.id }}</a></td>
                     <td>{{ row.nis }}</td>
-                    <td>{{ row.nisn }}</td>
                     <td>{{ row.name }}</td>
+                    <td>{{ row.grade }}</td>
                     <td>{{ row.classname }}</td>
                     <td>
                         {% if row.has_chosen %}

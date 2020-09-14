@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Students Table{% endblock %}
+{% block title %}Student Info{% endblock %}
 {% block header %}Students: Read{% endblock %}
 
 {% block body %}
@@ -21,13 +21,17 @@
                     <p>
                         <strong>ID: </strong> {{ row.id }} <br>
                         <strong>NIS: </strong> {{ row.nis }} <br>
-                        <strong>NISN: </strong> {{ row.nisn }} <br>
                     </p>
                     <p>
                         <strong>Name: </strong> {{ row.name }} <br>
                         <strong>Grade: </strong> {{ row.grade }} <br>
                         <strong>Class: </strong> {{ row.classname }} <br>
-                        <strong>Has Chosen: </strong> {{ row.has_chosen.name }} ({{ row.has_chosen.candidate_number }}) <br>
+                        <strong>Has Chosen: </strong> 
+                            {% if row.has_chosen %}
+                            {{ row.has_chosen.name }} ({{ row.has_chosen.candidate_number }}) <br>
+                            {% else %}
+                            -
+                            {% endif %}
                     </p>
                 </div>
             </div>

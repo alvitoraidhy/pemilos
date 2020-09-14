@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Verifikasi{% endblock %}
 {% block head %}
     {{ super() }}
     <!-- Bootstrap core CSS -->
@@ -35,8 +35,8 @@
                     {{ form.nis(class_="form-control", placeholder=form.nis.label.text, autocomplete="off") }}
                 </div>
                 <div class="form-group">
-                    {{ form.nisn.label(class_="sr-only") }}
-                    {{ form.nisn(class_="form-control", placeholder=form.nisn.label.text, autocomplete="off") }}
+                    {{ form.password.label(class_="sr-only") }}
+                    {{ form.password(class_="form-control", placeholder=form.password.label.text, autocomplete="off") }}
                 </div>
                 <button class="btn btn-md btn-primary btn-block mt-3" type="submit">Konfirmasi</button>
               </form>

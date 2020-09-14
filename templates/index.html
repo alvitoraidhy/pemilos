@@ -26,33 +26,34 @@
             <div class="col-6 south east block layer-2"></div>
             <div class="col-6 south west block layer-2"></div>
         </div>
-        <div class="w-100 h-100 position-absolute d-flex">
-            <div class="mx-auto my-auto p-4" id="box">
-                <h1 class="h3 font-weight-bold text-center">PEMILOS 2020</h1>
-                <div class="row">
-                    <div class="col-auto p-4 mx-auto">
-                        <div class="text-center">
-                            <h2 class="h5 text-center" id="election-text">Pemilihan</h2>
-                            <a href="/election/verification" class="h5 d-none" id="election-link" role="button">Pemilihan</a>
+        <div class="w-100 h-100 position-absolute d-flex p-4">
+            <div class="mx-auto my-auto card" id="box">
+                <h1 class="h3 font-weight-bold text-center card-header">PEMILOS 2020</h1>
+                <div class="row card-body">
+                    <div class="col-auto p-4 mx-auto text-center">
+                        <div class="">
+                            <h2 class="h5 text-center font-weight-bold" id="">Pemilihan</h2>
                         </div>
-                        Status: <span id="election-status">Loading...</span> <br>
-                        Mulai: <span id="election-start">Loading...</span> <br>
-                        Selesai: <span id="election-end">Loading...</span> <br>
-                        Waktu Tersisa: <span id="election-remaining-time">Loading...</span> <br>
+                        <div id="election-status">Loading...</div>
+                        <div id="election-remaining-time">00:00:00</div> 
+                        <div class="text-center mt-3">
+                            <a href="/election/verification" class="btn btn-primary disabled h5 shadow" id="election-link" role="button">Pilih Sekarang</a>
+                        </div>
                     </div>
-                    <div class="col-auto p-4 mx-auto">
+                    <div class="col-auto p-4 mx-auto text-center">
                         <div class="text-center">
-                            <h2 class="h5 text-center" id="result-text">Pengumuman</h2>
-                            <a href="/election/result" class="h5 d-none" id="result-link" role="button">Pengumuman</a>
+                            <h2 class="h5 text-center font-weight-bold" id="">Pengumuman</h2>
                         </div>
-                        Status: <span id="result-status">Loading...</span> <br>
-                        Mulai: <span id="result-start">Loading...</span> <br>
-                        Selesai: <span id="result-end">Loading...</span> <br>
-                        Waktu Tersisa: <span id="result-remaining-time">Loading...</span> <br>
+                        <div id="result-status">Loading...</div>
+                        <div id="result-remaining-time">00:00:00</div> 
+                        <div class="text-center mt-3">
+                            <a href="/election/result" class="btn btn-success disabled h5 shadow" id="result-link" role="button">Lihat Hasil</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <script src="/static/js/index.js"></script>
     </body>
 </html>
