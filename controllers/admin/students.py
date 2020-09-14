@@ -2,7 +2,7 @@ from sanic import response
 from sanic.exceptions import abort
 from datetime import datetime
 from urllib.parse import urlencode 
-import csv
+import csv, tempfile
 
 ROWS_PER_PAGE=15
 
@@ -144,7 +144,7 @@ def init(current):
     @helpers.authorized('admin')
     async def students_import_csv(request):
         form = forms.students.ImportCSVForm(request.form)
-        csv_format = ['nis','name','grade','class','password','has_chosen_id']
+        csv_format = ['nis','name','grade','classname','password','has_chosen_id']
         errors = []
         result = None
         if request.method == 'POST' and form.validate():
@@ -182,15 +182,3 @@ def init(current):
                 errors.append('Invalid submitted data!')
       
         return jinja.render("admin/students/import-csv.html", request, form=form, errors=errors, result=result, csv_format=str(csv_format))
-    
-    @app.route("/admin/students/export-csv", methods=['GET', 'POST'])
-    @helpers.authorized('admin')
-    async def students_export_csv(request):
-        students = await models.Student.all()
-        async def sample_streaming_fn(response):
-            await response.write('nis,name,grade,classname,password,has_chosen_id\n')
-            for student in students:
-                await response.write(f'{student.nis},{student.name}{student.grade}{student.classname}{student.password}{student.has_chosen_id}\n')
-
-        return response.stream(sample_streaming_fn, content_type='text/csv')
-    
