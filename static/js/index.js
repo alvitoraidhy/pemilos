@@ -1,5 +1,3 @@
-const pemilos_url = 'http://localhost:8000'
-
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();

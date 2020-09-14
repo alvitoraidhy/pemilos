@@ -22,7 +22,7 @@ class ProductionConfig(BaseConfig):
 class DevelopmentConfig(BaseConfig):
     APP_ENV = 'development'
     DEBUG = True
-    DB_URL = 'sqlite://.//development.db'
+    DB_URL = os.environ.get('DB_URL', 'sqlite://.//development.db')
     STATIC_DIR = str(Path(__file__).resolve().parent.joinpath('static'))
     UPLOAD_DIR = str(Path(__file__).resolve().parent.joinpath('uploads-dev'))
     UPLOAD_URL = '/uploads'
