@@ -10,6 +10,10 @@ class BaseConfig:
     FORWARDED_SECRET = SECRET_KEY
     WORKERS = int(os.environ.get('WORKERS', 1))
 
+    @classmethod
+    def to_dict(cls):
+        return {key: getattr(cls, key) for key in dir(cls) if key.isupper()}
+
 class ProductionConfig(BaseConfig):
     APP_ENV = 'production'
     DEBUG = False
