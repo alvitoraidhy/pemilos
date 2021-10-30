@@ -75,7 +75,16 @@ def init(current):
                 elif form.has_chosen_id.data == 'none':
                     filter_dict['has_chosen_id__isnull'] = True
             
+            try:
+                grade = int(data['grade'])
+                filter_dict['grade'] = grade
+
+            except:
+                if form.grade.data == 'all':
+                    pass
+            
             data.pop('has_chosen_id', None)
+            data.pop('grade', None)
 
             query = [(key, data[key]) for key in data.keys() if data[key]]
             filter_dict = {**filter_dict, **{ f'{ key}__icontains': value for key, value in query } }
