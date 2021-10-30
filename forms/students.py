@@ -12,7 +12,7 @@ class FindForm(Form):
             ("all", 'All'),
             (10, 'X'),
             (11, 'XI'),
-            (12, 'XI')
+            (12, 'XII')
         ], default='all'
     )
     classname = StringField('Classname')
