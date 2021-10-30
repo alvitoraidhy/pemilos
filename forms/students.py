@@ -7,12 +7,13 @@ class FindForm(Form):
     id = IntegerField('ID')
     nis = IntegerField('NIS')
     name = StringField('Name')
-    grade = SelectField('Grade', coerce=int, 
+    grade = SelectField('Grade', 
         choices=[
+            ("all", 'All')
             (10, 'X'),
             (11, 'XI'),
             (12, 'XI')
-        ]
+        ], default='all'
     )
     classname = StringField('Classname')
     has_chosen_id = SelectField('Candidate Number', choices=[('all', 'All'), ('any', 'Yes'), ('none','No')], default='all')
