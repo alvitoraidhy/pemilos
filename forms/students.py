@@ -9,7 +9,7 @@ class FindForm(Form):
     name = StringField('Name')
     grade = SelectField('Grade', 
         choices=[
-            ("all", 'All')
+            ("all", 'All'),
             (10, 'X'),
             (11, 'XI'),
             (12, 'XI')
