@@ -92,19 +92,19 @@ function setStatus(response, section) {
   
     switch (result.status.toLowerCase()) {
       case 'Finished'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Selesai";
+        document.getElementById(`${section}-status`).innerHTML = "Finished";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-success')
         document.getElementById(`${section}-link`).classList.add('disabled')
         break;
       
       case 'In Progress'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Sedang Berlangsung";
+        document.getElementById(`${section}-status`).innerHTML = "In Progress";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-warning')
         document.getElementById(`${section}-link`).classList.remove('disabled')
         break;
       
       case 'Not Started Yet'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Belum Dibuka";
+        document.getElementById(`${section}-status`).innerHTML = "Not Started";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-info')
         document.getElementById(`${section}-link`).classList.add('disabled')
         break;

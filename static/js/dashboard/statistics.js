@@ -44,8 +44,8 @@ var startCountdown = function(section) {
 function setStatus(response, section) {
   result = JSON.parse(response).result
   document.getElementById(`${section}-status`).innerHTML = result.status;
-  document.getElementById(`${section}-start`).innerHTML = result.start;
-  document.getElementById(`${section}-end`).innerHTML = result.end;
+  document.getElementById(`${section}-start`).innerHTML = (new Date(result.start)).toLocaleString();
+  document.getElementById(`${section}-end`).innerHTML = (new Date(result.end)).toLocaleString();
 
   if (Math.abs(remaining_time[section] - result['remaining_time']) > 3) {
     if (remaining_time[section] === 0) {

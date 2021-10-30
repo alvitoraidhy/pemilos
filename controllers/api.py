@@ -1,5 +1,5 @@
 from sanic import response
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from datetime import datetime
 
 format = '%Y-%m-%dT%H:%M'
@@ -124,7 +124,7 @@ def init(current):
             end = config.get('settings', 'result_schedule_end')
             now = datetime.now()
             if now < datetime.strptime(start, format) or datetime.strptime(end, format) < now:
-                return abort(403)
+                raise SanicException('Forbidden', 403)
 
         candidates = await models.Candidate.all()
         return response.json({

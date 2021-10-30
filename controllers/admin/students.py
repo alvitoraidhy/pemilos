@@ -1,5 +1,5 @@
 from sanic import response
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from datetime import datetime
 from urllib.parse import urlencode 
 import csv, tempfile
@@ -48,6 +48,36 @@ def init(current):
             previous=urlencode((*query, ('page', page - 1))) if page > 1 else None
         )
 
+    @app.route("/admin/students/batch-delete", methods=['POST'])
+    @helpers.authorized('admin')
+    async def students_batch_delete(request):
+        form = forms.students.FindForm(request.form or None)
+        form.has_chosen_id.choices += [(x.candidate_number, f'{x.candidate_number}') for x in (await models.Candidate.all())]
+
+        if form.validate():
+            data, filter_dict = { key: value for key, value in form.data.items() }, dict()
+            try:
+                has_chosen_id = int(data['has_chosen_id'])
+                filter_dict['has_chosen_id__icontains'] = has_chosen_id
+
+            except:
+                if form.has_chosen_id.data == 'any':
+                    filter_dict['has_chosen_id__not_isnull'] = True
+                elif form.has_chosen_id.data == 'none':
+                    filter_dict['has_chosen_id__isnull'] = True
+            
+            data.pop('has_chosen_id', None)
+
+            query = [(key, data[key]) for key in data.keys() if data[key]]
+            filter_dict = {**filter_dict, **{ f'{ key}__icontains': value for key, value in query } }
+            
+            await models.Student.filter(**filter_dict).delete()
+
+            return response.redirect('/admin/students')
+        
+        else: 
+            raise SanicException('Bad Request', 400)
+
     @app.route("/admin/students/create", methods=['GET', 'POST'])
     @helpers.authorized('admin')
     async def students_create(request):
@@ -80,7 +110,7 @@ def init(current):
         if row:
             return jinja.render("admin/students/read.html", request, row=row)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/<id:int>/edit", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -114,7 +144,7 @@ def init(current):
             return jinja.render("admin/students/edit.html", request, row=row, form=form, errors=errors)
 
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/<id:int>/delete", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -138,7 +168,7 @@ def init(current):
 
             return jinja.render("admin/students/delete.html", request, row=row, form=form, errors=errors)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/import-csv", methods=['GET', 'POST'])
     @helpers.authorized('admin')
