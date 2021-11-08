@@ -103,7 +103,7 @@ def init(current):
         end = config.get('settings', 'result_schedule_end')
         now = datetime.now()
         if now > datetime.strptime(start, format) and datetime.strptime(end, format) > now:
-            return jinja.render("election/result.html", request)
+            return jinja.render("election/result.html", request, date=now.strftime("%d-%m-%Y"))
 
         else:
             return response.redirect('/')

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Pemilihan{% endblock %}
+{% block title %}Ballot{% endblock %}
 {% block head %}
     {{ super() }}
     <!-- Bootstrap core CSS -->
@@ -16,12 +16,10 @@
             <div class="row align-content-center min-vh-100">
                 <div class="col-12 py-3 ribbon"></div>
                 <div class="col-12 jumbotron m-0 shadow">
-                    <div class="ribbon text-center py-1 mb-3"><h1>PEMILOS</h1></div>
+                    <div class="ribbon text-center py-1 mb-3"><h1>Pemilos</h1></div>
                     <p class="">
-                        Silahkan baca terlebih dahulu visi dan misi setiap calon. Jika sudah menentukan pilihan, klik tombol 'Pilih'.
+                        Please read the vision and mission(s) of each candidate and vote by pressing "<b>Vote</b>".
                     </p>
-                    <hr class="my-4">
-                    <p class="text-info">Hubungi pihak administrator jika mengalami kendala.</p>
 
                     {% if errors|length > 0 %}
                     <span class="text-danger">Error!</span>
@@ -51,15 +49,15 @@
                             <div class="my-auto">
                                 <h2 class="h4 mt-3 font-weight-bold candidate-name">{{ candidate.name }}</h2>
                                 <h3 class="h5 font-weight-bold candidate-classname">{{ candidate.classname }}</h3>
-                                <h3 class="h5 candidate-number">Caketos Nomor Urut {{ candidate.candidate_number }}</h3>
+                                <h3 class="h5 candidate-number">Candidate Number {{ candidate.candidate_number }}</h3>
                                 <div class="candidates-buttons mt-3">
-                                    <button class="btn btn-info btn-md font-weight-bold shadow" data-toggle="modal" data-target="#candidate-{{ candidate.candidate_number }}">Visi / Misi</button>
+                                    <button class="btn btn-info btn-md font-weight-bold shadow" data-toggle="modal" data-target="#candidate-{{ candidate.candidate_number }}">Vision / Mission</button>
                                     <button class="btn btn-success btn-md font-weight-bold shadow" 
                                         onclick="
                                             document.getElementById(`form-candidate-id`).value = '{{ candidate.candidate_number }}';
                                             document.getElementById(`election-form`).submit();
                                         "
-                                    >Pilih</button>
+                                    >Vote</button>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +66,7 @@
                 {% endfor %}
                 <div class="col-12 py-2 ribbon mb-5"></div>
                 <div class="col-12 d-flex justify-content-around mt-5 py-2 shadow ribbon">
-                    <h5 class="m-0">Made by <strong>8ICT</strong></h5>
+                    <footer>© 2021 8ICT, Alvito Raidhy Trinanda</footer>
                 </div>
             </div>
         </div>
@@ -78,16 +76,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title font-weight-bold" id="candidate-1-title">{{ candidate.name }} <sub>- Caketos Nomor Urut {{candidate.candidate_number}}</sub></h5>
+                <h5 class="modal-title font-weight-bold" id="candidate-1-title">{{ candidate.name }} <br> <sub>Candidate Number {{candidate.candidate_number}}</sub></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
-                    <h4><u>Visi:</u></h4>
+                    <h4>Vision</h4>
                     <pre id="candidate-1-vision">{{ candidate.vision }}</pre>
-                    <h4><u>Misi:</u></h4>
-                    <pre id="candidate-1-vision">{{ candidate.mission }}</pre>
+                    <h4>Mission(s)</h4>
+                    <pre id="candidate-1-mission">{{ candidate.mission }}</pre>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

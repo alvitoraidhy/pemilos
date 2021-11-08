@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html>
     <head>
         <!-- Standard Meta -->
         <meta charset="utf-8">
@@ -7,54 +7,55 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
         <!-- Site Properties -->
-        <title>PEMILOS</title>
+        <title>Pemilos v1.1</title>
 
         <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="/static/css/index.css" rel="stylesheet">
     </head>
-    <body class="h-100">
+    <body class="min-vh-100 d-flex flex-column">
         <script src="/static/js/base.js"></script>
-        <div class="h-100 w-100 position-absolute" id="layer-1">
+        <div class="h-100 w-100 position-fixed" id="layer-1">
             <div class="col-6 north west block layer-1"></div>
             <div class="col-6 north east block layer-1"></div>
             <div class="col-6 south east block layer-1"></div>
             <div class="col-6 south west block layer-1"></div>
         </div>
-        <div class="h-100 w-100 position-absolute" id="layer-2">
+        <div class="h-100 w-100 position-fixed" id="layer-2">
             <div class="col-6 north west block layer-2"></div>
             <div class="col-6 north east block layer-2"></div>
             <div class="col-6 south east block layer-2"></div>
             <div class="col-6 south west block layer-2"></div>
         </div>
-        <div class="w-100 h-100 position-absolute d-flex p-4">
-            <div class="mx-auto my-auto card" id="box">
-                <h1 class="h3 font-weight-bold text-center card-header">PEMILOS</h1>
-                <div class="row card-body">
-                    <div class="col-auto p-4 mx-auto text-center">
-                        <div class="">
-                            <h2 class="h5 text-center font-weight-bold" id="">Election</h2>
-                        </div>
-                        <div id="election-status">Loading...</div>
+        <div class="mx-auto mt-auto d-flex p-4">
+            <div class="card bg-dark text-white box" id="main-box">
+                <div class="row card-body pb-3">
+                    <div class="col-xs-12 col-sm-5 mx-auto text-center pt-3 px-4">
+                        <h2 class="h5 text-center font-weight-bold" id="">Election:<br><span id="election-status">Loading...</span></h2>
                         <div id="election-remaining-time">00:00:00</div> 
-                        <div class="text-center mt-3">
-                            <a href="/election/verification" class="btn btn-primary disabled h5 shadow" id="election-link" role="button">Vote Now!</a>
+                        <div class="text-center mt-2">
+                            <a href="/election/verification" class="btn btn-primary disabled h5 shadow-sm" id="election-link" role="button">Vote Now!</a>
                         </div>
                     </div>
-                    <div class="col-auto p-4 mx-auto text-center">
-                        <div class="text-center">
-                            <h2 class="h5 text-center font-weight-bold" id="">Result</h2>
-                        </div>
-                        <div id="result-status">Loading...</div>
+                    <div class="d-xs-none border-left"></div>
+                    <div class="col-xs-12 col-sm-5 mx-auto text-center pt-3 px-4">
+                        <h2 class="h5 text-center font-weight-bold" id="">Result:<br><span id="result-status">Loading...</span></h2>
                         <div id="result-remaining-time">00:00:00</div> 
-                        <div class="text-center mt-3">
-                            <a href="/election/result" class="btn btn-success disabled h5 shadow" id="result-link" role="button">View Result</a>
+                        <div class="text-center mt-2">
+                            <a href="/election/result" class="btn btn-success disabled h5 shadow-sm" id="result-link" role="button">View Result</a>
                         </div>
                     </div>
                 </div>
+                <div class="card-header">
+                    <h1 class="m-0 font-weight-bold h4 text-center">Pemilos <sub>v1.1</sub></h1>
+                </div>
             </div>
         </div>
-
+        <div class="mx-auto mt-auto d-flex p-4">
+            <div class="card bg-dark text-white box py-2 px-3 text-center">
+                <footer>© 2021 8ICT, Alvito Raidhy Trinanda</footer>
+            </div>
+        </div>
         <script src="/static/js/index.js"></script>
     </body>
 </html>

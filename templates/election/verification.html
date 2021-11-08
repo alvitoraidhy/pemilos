@@ -12,21 +12,22 @@
 
 
 {% block body %}
-<div class="min-vh-100 d-flex justify-content-center align-items-center">
-    <div class="card" id="mainForm" style="max-width: 60vw;">
+<div class="min-vh-100 d-flex flex-column pb-2 pt-5">
+    <div class="mx-auto mt-auto card bg-dark text-white px-2 box" id="mainForm" style="max-width: 85vw;">
       <div class="row">
         <div class="col-12">
-          <h1 class="h5 card-header text-center">
-            <i class="far fa-id-card"></i>
-            Student Identity Verification
+          <h1 class="h4 card-header text-center font-weight-bold">
+            Pemilos <sub>v1.1</sub>
           </h1>
         </div>
       </div>
       <div class="row card-body">
-        <div class="col-md-5 my-auto text-center">
-          <img class="card-img-top" id="placeholder" src="/static/img/account-placeholder.svg">
+        <div class="col-12 py-2">
+          <h2 class="h5"><i class="far fa-id-card"></i> Student Identity Verification</h2>
+          <hr>
+          <p>Please verify your student identity by filling the form below.</p>
         </div>
-        <div class="col-md-7 py-2">
+        <div class="col-12 py-2">
           <form method="POST" action="/election/verification">
             {% if errors|length > 0 %}
                 <span class="text-danger">Error!</span>
@@ -49,5 +50,10 @@
         </div>
       </div>
     </div>
+    <div class="mx-auto mt-auto d-flex p-4">
+      <div class="card bg-dark text-white box py-2 px-3 text-center">
+          <footer>© 2021 8ICT, Alvito Raidhy Trinanda</footer>
+      </div>
+  </div>
 </div>
 {% endblock %}

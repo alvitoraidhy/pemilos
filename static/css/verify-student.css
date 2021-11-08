@@ -1,24 +1,8 @@
 body {
-	background: #ECE9E6;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #eeeeee, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #eeeeee, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */	
+	background: #575f67;  /* fallback for old browsers */
 }
 
-#mainForm {
+.box {
 	border: 0;
-	box-shadow: 3px 3px 4px #bbb;
-}
-
-#logo {
-	position: absolute;
-	bottom: 50px;
-	right: 50px;
-	max-width: 200px;
-	z-index: -1;
-}
-
-#placeholder {
-	max-width: 185px;
-	border-radius: 15px 50px;
-	box-shadow: 1px 1px 3px black;
+	box-shadow: 3px 3px 4px #000;
 }

@@ -3,12 +3,14 @@ from sanic_jinja2 import SanicJinja2
 from jinja2 import FileSystemLoader
 from tortoise.contrib.sanic import register_tortoise
 from configparser import ConfigParser
+from pathlib import Path
 import os
 import config, models, forms, controllers
 
 app = Sanic('pemilos')
 app.update_config(config.classes[os.environ.get('ENV', 'development')].to_dict())
 
+app.static('/', Path(app.config.STATIC_DIR) / "icons")
 app.static('/static', app.config.STATIC_DIR)
 app.static(app.config.UPLOAD_URL, app.config.UPLOAD_DIR)
 

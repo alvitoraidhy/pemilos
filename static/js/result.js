@@ -115,7 +115,7 @@ function loop() {
                 </div>
                 <div class="card-body text-center">
                   <p>
-                    <strong><span id="candidate-${candidate.candidate_number}-vote">${candidate.votes}</span></strong> suara
+                    <strong><span id="candidate-${candidate.candidate_number}-vote">${candidate.votes}</span></strong> vote(s)
                   </p>
                 </div>
               </div>

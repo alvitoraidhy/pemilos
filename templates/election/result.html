@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Hasil Pemilihan{% endblock %}
+{% block title %}Election Result{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -10,17 +10,16 @@
 {% block body %}
 <div class="container pb-5">
     <div class="row">
-        <div class="col-12 mt-2 pb-5 text-center">
-            <h1 class="h3 mx-auto mt-4">
+        <div class="col-12 mt-2 pb-4 text-center">
+            <h1 class="h4 mx-auto mt-4">
                 <strong>
-                    Hasil Pengumpulan Suara <br>
-                    Pemilihan Calon Ketua OSIS SMAN&nbsp8&nbspBandung <br>
-                    Tahun 2020
+                    Pemilos Election Result <br>
+                    {{ date }}
                 </strong>
             </h1>
         </div> 
         <div class="col-12 mx-auto">
-            <div class="mb-5" style="height: 75vw;max-height: 300px;">
+            <div class="mb-4" style="height: 75vw;max-height: 300px;">
                 <canvas class="" id="resultChart"></canvas>
             </div>
         </div>
