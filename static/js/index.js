@@ -1,5 +1,3 @@
-const pemilos_url = 'http://localhost:8000'
-
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -36,10 +34,11 @@ function animate(size='0%', callback=function(){}) {
 }
 
 function setColor(className, color) {
-    document.getElementsByClassName(`south west block ${className}`)[0].style['background-color'] = color;
-    document.getElementsByClassName(`south east block ${className}`)[0].style['background-color'] = color;
-    document.getElementsByClassName(`north west block ${className}`)[0].style['background-color'] = color;
-    document.getElementsByClassName(`north east block ${className}`)[0].style['background-color'] = color;
+    var els = document.getElementsByClassName(`${className}`)
+
+    for (var i = 0; i < els.length; i++) {
+        els[i].style['background-color'] = color
+    }
 }
 
 function open(callback) {
@@ -60,32 +59,54 @@ function loop() {
     })
 }
 
+var remaining_time = {
+    election: 0,
+    result: 0
+}
+
+var startCountdown = function(section) {
+    var countdownInterval = setInterval(function() {
+        if (remaining_time[section] > 0) {
+            remaining_time[section] -= 1
+            document.getElementById(`${section}-remaining-time`).innerHTML = new Date(remaining_time[section] * 1000).toISOString().substr(11, 8)
+        }
+        else {
+            clearInterval(countdownInterval)
+            document.getElementById(`${section}-remaining-time`).innerHTML = '00:00:00'
+        }
+    }, 1000)
+} 
+
 function setStatus(response, section) {
     result = JSON.parse(response).result
-    document.getElementById(`${section}-start`).innerHTML = result.start;
-    document.getElementById(`${section}-end`).innerHTML = result.end;
-    document.getElementById(`${section}-remaining-time`).innerHTML = result["remaining_time"]
+
+    if (Math.abs(remaining_time[section] - result['remaining_time']) > 3) {
+        if (remaining_time[section] === 0) {
+            remaining_time[section] = result['remaining_time']
+            startCountdown(section)
+        }
+        else {
+            remaining_time[section] = result['remaining_time']
+        }
+    }
   
     switch (result.status.toLowerCase()) {
       case 'Finished'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Selesai";
+        document.getElementById(`${section}-status`).innerHTML = "Finished";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-success')
-        document.getElementById(`${section}-text`).classList.remove('d-none')
-        document.getElementById(`${section}-link`).classList.add('d-none')
+        document.getElementById(`${section}-link`).classList.add('disabled')
         break;
       
       case 'In Progress'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Sedang Berlangsung";
+        document.getElementById(`${section}-status`).innerHTML = "In Progress";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-warning')
-        document.getElementById(`${section}-text`).classList.add('d-none')
-        document.getElementById(`${section}-link`).classList.remove('d-none')
+        document.getElementById(`${section}-link`).classList.remove('disabled')
         break;
       
       case 'Not Started Yet'.toLowerCase():
-        document.getElementById(`${section}-status`).innerHTML = "Belum Mulai";
+        document.getElementById(`${section}-status`).innerHTML = "Not Started";
         document.getElementById(`${section}-status`).setAttribute('class', 'text-info')
-        document.getElementById(`${section}-text`).classList.remove('d-none')
-        document.getElementById(`${section}-link`).classList.add('d-none')
+        document.getElementById(`${section}-link`).classList.add('disabled')
         break;
         
       default:
@@ -102,6 +123,7 @@ function interval() {
 }
 
 var myInterval = setInterval(interval, 5000)
+
 
 loop()
 interval()

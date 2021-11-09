@@ -1,5 +1,3 @@
-const pemilos_url = 'http://localhost:8000'
-
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -25,11 +23,39 @@ function classPercentage(response, classname) {
   }
 }
 
+var remaining_time = {
+  election: 0,
+  result: 0
+}
+
+var startCountdown = function(section) {
+  var countdownInterval = setInterval(function() {
+      if (remaining_time[section] > 0) {
+          remaining_time[section] -= 1
+          document.getElementById(`${section}-remaining-time`).innerHTML = new Date(remaining_time[section] * 1000).toISOString().substr(11, 8)
+      }
+      else {
+          clearInterval(countdownInterval)
+          document.getElementById(`${section}-remaining-time`).innerHTML = '00:00:00'
+      }
+  }, 1000)
+}
+
 function setStatus(response, section) {
   result = JSON.parse(response).result
   document.getElementById(`${section}-status`).innerHTML = result.status;
-  document.getElementById(`${section}-start`).innerHTML = result.start;
-  document.getElementById(`${section}-end`).innerHTML = result.end;
+  document.getElementById(`${section}-start`).innerHTML = (new Date(result.start)).toLocaleString();
+  document.getElementById(`${section}-end`).innerHTML = (new Date(result.end)).toLocaleString();
+
+  if (Math.abs(remaining_time[section] - result['remaining_time']) > 3) {
+    if (remaining_time[section] === 0) {
+        remaining_time[section] = result['remaining_time']
+        startCountdown(section)
+    }
+    else {
+        remaining_time[section] = result['remaining_time']
+    }
+  }
 
   switch (result.status.toLowerCase()) {
     case 'Finished'.toLowerCase():
@@ -42,7 +68,6 @@ function setStatus(response, section) {
     
     case 'Not Started Yet'.toLowerCase():
       document.getElementById(`${section}-status`).setAttribute('class', 'text-info')
-      document.getElementById(`${section}-status`).innerHTML = result.status
       break;
       
     default:
@@ -50,42 +75,6 @@ function setStatus(response, section) {
       break;
   }
 }
-
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
-
-// Result Chart
-var ctx = document.getElementById("resultChart");
-var chartData = {
-  type: 'pie',
-  data: {
-    labels: [],
-    datasets: [{}],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-    },
-    legend: {
-      display: true,
-      position: 'right',
-      labels: {
-        fontSize: 14
-      }
-    },
-    cutoutPercentage: 0,
-  }}
-var resultChart = new Chart(ctx, chartData);
 
 function loop() {
   // Total Students
@@ -116,32 +105,6 @@ function loop() {
     classPercentage(response, 'xii')
   })
 
-  // Result Chart
-  httpGetAsync(`${pemilos_url}/api/vote-result`, function(response) {
-    result = JSON.parse(response).result
-    console.log(result)
-    var labels = [],
-      data = [],
-      backgroundColor = []
-
-    for (var i = 0; i < result.candidates.length; i++){
-      candidate = result.candidates[i]
-      labels.push(candidate.name)
-      data.push(candidate.votes)
-      backgroundColor.push("#" + candidate.name.toString(16).padStart(6, '0'))
-    }
-
-    labels.push('Abstain')
-    data.push(result.abstain_votes)
-    backgroundColor.push('#dddddd')
-
-    chartData.data.labels = labels
-    chartData.data.datasets[0].data = data,
-    chartData.data.datasets[0].backgroundColor = backgroundColor
-    chartData.data.datasets[0].hoverBorderColor = "rgba(234, 236, 244, 1)"
-
-    resultChart.update();
-  })
 }
 
 loop()

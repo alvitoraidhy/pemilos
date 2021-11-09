@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Candidates Table{% endblock %}
+{% block title %}Candidate Info{% endblock %}
 {% block header %}Candidates: Read{% endblock %}
 
 {% block body %}
@@ -28,22 +28,19 @@
                 </div>
                 <div class="card-body text-left w-auto">
                     <p>
-                        <strong>Candidate Number: </strong> {{ row.candidate_number }} <br>
-                        <strong>NIS: </strong> {{ row.nis }} <br>
-                        <strong>NISN: </strong> {{ row.nisn }} <br>
-                    </p>
-                    <p>
-                        <strong>Name: </strong> {{ row.name }} <br>
-                        <strong>Class: </strong> {{ row.classname }} <br>
-                        <strong>Image: </strong> {{ row.image }} <br>
+                        <strong>Name: </strong> <span>{{ row.name }}</span> <br>
+                        <strong>NIS: </strong> <span>{{ row.nis }}</span> <br>
+                        <strong>Candidate Number: </strong> <span>{{ row.candidate_number }}</span> <br>
+                        <strong>Class: </strong> <span>{{ row.classname }}</span> <br>
+                        <strong>Image: </strong> <span>{{ row.image }}</span> <br>
                     </p>
                     <p>
                         <strong>Vision:</strong> <br>
-                        {{ row.vision }}
+                        <p style="white-space: pre-wrap;">{{ row.vision }}</p>
                     </p>
                     <p>
-                        <strong>Mission:</strong> <br>
-                        {{ row.mission }}
+                        <strong>Mission(s):</strong> <br>
+                        <p style="white-space: pre-wrap;">{{ row.mission }}</p>
                     </p>
                 </div>
             </div>

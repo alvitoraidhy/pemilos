@@ -1,4 +1,4 @@
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from functools import wraps
 
 def check_auth(request, account_type):
@@ -17,7 +17,7 @@ def authorized(account_type):
                 return response
             else:
                 # the user is not authorized.
-                abort(403)
+                raise SanicException('Forbidden', 403)
 
         return decorated_function
     return decorator

@@ -16,12 +16,12 @@ def init(current):
         if request.method == 'POST' and form.validate():
             try:
                 nis = int(form.nis.data)
-                nisn = int(form.nisn.data)
             except:
-                errors = ['NIS dan NISN harus berupa angka']
+                errors = ['NIS harus berupa angka']
             else:
-                student = await models.Student.get_or_none(nis=int(nis), nisn=int(nisn))
-                if student:
+                password = form.password.data
+                student = await models.Student.get_or_none(nis=nis)
+                if student and student.verify_password(password):
                     data = {
                         'id': student.id,
                         'nis': student.nis,
@@ -32,7 +32,8 @@ def init(current):
                     helpers.login(request, 'student', data)
                     
                     return response.redirect('/election/start')
-                errors = ['NIS dan/atau NISN salah']
+                else:
+                    errors = ['NIS dan/atau password salah']
 
         return jinja.render("election/verification.html", request, form=form, errors=errors)
 
@@ -102,7 +103,7 @@ def init(current):
         end = config.get('settings', 'result_schedule_end')
         now = datetime.now()
         if now > datetime.strptime(start, format) and datetime.strptime(end, format) > now:
-            return jinja.render("election/result.html", request)
+            return jinja.render("election/result.html", request, date=now.strftime("%d-%m-%Y"))
 
         else:
             return response.redirect('/')

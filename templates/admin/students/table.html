@@ -15,29 +15,33 @@
     <div class="card-body">
         <a href="/admin/students/create">Create a new entry</a> <br>
         <a href="/admin/students/import-csv">Import CSV</a> <br>
-        <a href="/admin/students/export-csv">Export CSV</a>
-        <div class="table table-responsive p-3">
+        <div class="table-responsive p-3">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>NIS</th>
-                        <th>NISN</th>
                         <th>Name</th>
+                        <th>Grade</th>
                         <th>Classname</th>
                         <th>Has Voted</th>
                         <th>#</th>
                     </tr>
                     <tr>
-                        <form method="GET" action="/admin/students">
+                        <form method="GET" action="/admin/students" id="findForm">
                             <th>{{ render_field(form.id) }}</th>
                             <th>{{ render_field(form.nis) }}</th>
-                            <th>{{ render_field(form.nisn) }}</th>
                             <th>{{ render_field(form.name) }}</th>
+                            <th>{{ render_field(form.grade) }}</th>
                             <th>{{ render_field(form.classname) }}</th>
                             <th>{{ render_field(form.has_chosen_id) }}</th>
                             <th>
-                                <button class="btn btn-primary" type="submit">Find</button>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-search" title="Find"></i>                                </button>
+                                    <a class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#batchDeleteModal">
+                                        <i class="fas fa-dumpster" title="Batch Delete"></i>
+                                    </a>
+                                </div>
                             </th>
                         </form>
                     </tr>
@@ -46,8 +50,8 @@
                     <tr>
                         <th>ID</th>
                         <th>NIS</th>
-                        <th>NISN</th>
                         <th>Name</th>
+                        <th>Grade</th>
                         <th>Classname</th>
                         <th>Has Voted</th>
                         <th>#</th>
@@ -58,8 +62,8 @@
                 <tr>
                     <td><a href="./students/{{ row.id }}">{{ row.id }}</a></td>
                     <td>{{ row.nis }}</td>
-                    <td>{{ row.nisn }}</td>
                     <td>{{ row.name }}</td>
+                    <td>{{ row.grade }}</td>
                     <td>{{ row.classname }}</td>
                     <td>
                         {% if row.has_chosen %}
@@ -69,8 +73,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="./students/{{ row.id}}/edit" class="btn btn-success btn-md" role="button">Edit</a>
-                        <a href="./students/{{ row.id}}/delete" class="btn btn-danger btn-md" role="button">Delete</a>
+                        <div class="d-flex align-items-center justify-content-around">
+                            <a href="./students/{{ row.id}}/edit" class="btn btn-success btn-md" role="button"><i class="fas fa-edit" title="Edit"></i></a>
+                            <a href="./students/{{ row.id}}/delete" class="btn btn-danger btn-md" role="button"><i class="fas fa-trash" title="Delete"></i></a>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
@@ -83,6 +89,32 @@
         {% if next %}
         <a href="?{{ next }}" class="btn btn-info btn-md" role="button">Next</a>
         {% endif %}
+    </div>
+</div>
+
+<!-- Batch Delete Modal-->
+<div class="modal fade" id="batchDeleteModal" tabindex="-1" role="dialog" aria-labelledby="batchDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="batchDeleteModalLabel">Batch Delete Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to batch delete entries with the entered data?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" onclick="
+                    var form = document.getElementById('findForm')
+                    form.setAttribute('method', 'POST');
+                    form.setAttribute('action', '/admin/students/batch-delete');
+                    form.submit();
+                ">Confirm</button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

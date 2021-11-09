@@ -6,8 +6,8 @@ import hashlib
 class Admin(Model):
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=30)
-    username = fields.CharField(max_length=10, unique=True)
-    password_hash = fields.CharField(max_length=20)
+    username = fields.CharField(max_length=20, unique=True)
+    password_hash = fields.CharField(max_length=50)
 
     def set_password(self, new_password):
         new_password_hash = hashlib.md5(new_password.encode('utf-8')).hexdigest()

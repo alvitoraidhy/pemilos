@@ -1,5 +1,5 @@
 from sanic import response
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from datetime import datetime
 
 
@@ -56,7 +56,7 @@ def init(current):
         if row:
             return jinja.render("admin/candidates/read.html", request, row=row)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/candidates/<candidate_number:int>/edit", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -107,7 +107,7 @@ def init(current):
             return jinja.render("admin/candidates/edit.html", request, row=row, form=form, errors=errors)
 
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/candidates/<candidate_number:int>/delete", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -131,4 +131,4 @@ def init(current):
 
             return jinja.render("admin/candidates/delete.html", request, row=row, form=form, errors=errors)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)

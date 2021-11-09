@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./_build/pip_packages/lib/python3.9/site-packages"
+    ]
+}

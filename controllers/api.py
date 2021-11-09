@@ -1,5 +1,5 @@
 from sanic import response
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from datetime import datetime
 
 format = '%Y-%m-%dT%H:%M'
@@ -52,10 +52,6 @@ def init(current):
         else:
             status = "Finished"
 
-        hours, remainder = divmod(remaining_time, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        remaining_time = '{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds))
-
         return response.json({
             'result': {
                 'start': start,
@@ -86,10 +82,6 @@ def init(current):
             remaining_time = (end_time - now).seconds
         else:
             status = "Finished"
-
-        hours, remainder = divmod(remaining_time, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        remaining_time = '{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds))
 
         return response.json({
             'result': {
@@ -132,7 +124,7 @@ def init(current):
             end = config.get('settings', 'result_schedule_end')
             now = datetime.now()
             if now < datetime.strptime(start, format) or datetime.strptime(end, format) < now:
-                return abort(403)
+                raise SanicException('Forbidden', 403)
 
         candidates = await models.Candidate.all()
         return response.json({
@@ -143,6 +135,8 @@ def init(current):
                     'candidate_number': candidate.candidate_number,
                     'votes': await models.Student.filter(has_chosen_id=candidate.candidate_number).count()
                 } for candidate in candidates],
-                'abstain_votes': await models.Student.filter(has_chosen_id__isnull=True).count()
+                'abstain_votes': await models.Student.filter(has_chosen_id__isnull=True).count(),
+                'total_voted_students': await models.Student.filter(has_chosen_id__not_isnull=True).count(),
+                'total_students': len(candidates)
             }
         })

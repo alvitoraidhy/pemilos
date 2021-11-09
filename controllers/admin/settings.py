@@ -37,4 +37,4 @@ def init(current):
         except:
             pass
 
-        return jinja.render("admin/settings.html", request, form=form, errors=errors)
+        return jinja.render("admin/settings.html", request, form=form, errors=errors, now=str(datetime.now()))

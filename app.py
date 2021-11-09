@@ -1,13 +1,16 @@
 from sanic import Sanic
 from sanic_jinja2 import SanicJinja2
+from jinja2 import FileSystemLoader
 from tortoise.contrib.sanic import register_tortoise
 from configparser import ConfigParser
+from pathlib import Path
 import os
 import config, models, forms, controllers
 
-app = Sanic("app")
-app.config.from_object(config.classes[os.environ.get('ENV', 'development')])
+app = Sanic('pemilos')
+app.update_config(config.classes[os.environ.get('ENV', 'development')].to_dict())
 
+app.static('/', Path(app.config.STATIC_DIR) / "icons")
 app.static('/static', app.config.STATIC_DIR)
 app.static(app.config.UPLOAD_URL, app.config.UPLOAD_DIR)
 
@@ -20,7 +23,7 @@ if not os.path.isfile(app.config.APP_CONFIG_FILE):
 
 config.read(app.config.APP_CONFIG_FILE)
 
-jinja = SanicJinja2(app)
+jinja = SanicJinja2(app, loader=FileSystemLoader('templates/'))
 
 class current:
   app, jinja, models, forms, config = app, jinja, models, forms, config
@@ -35,6 +38,8 @@ register_tortoise(
 if __name__ == "__main__":
   app.run(
     host=app.config.APP_HOST,
-    port=app.config.APP_PORT,
-    debug=app.config.DEBUG
+    port=int(app.config.APP_PORT),
+    debug=app.config.DEBUG,
+    workers=app.config.WORKERS,
+    access_log=False
   )

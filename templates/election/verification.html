@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Verification{% endblock %}
 {% block head %}
     {{ super() }}
     <!-- Bootstrap core CSS -->
@@ -12,37 +12,48 @@
 
 
 {% block body %}
-<div class="vh-100 d-flex justify-content-center align-items-center">
-    <div class="container-fluid p-5">
-        <div class="row justify-content-center">
-          <div class="mb-4">
-            <div class="d-flex align-items-center mb-1">
-              <img class="mx-auto" id="logo" src="/static/img/logo.png">
-            </div>
-            <div class="d-flex align-items-center">
-              <form method="POST" action="/election/verification" class="mx-auto p-3 text-center">
-                {% if errors|length > 0 %}
-                    <span class="text-danger">Error!</span>
-                    <ul class="errors">
-                        {% for error in errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                <h1 class="h4 mb-3 font-weight-normal">Verifikasi Identitas Siswa</h1>
-                <div class="form-group">
-                    {{ form.nis.label(class_="sr-only") }}
-                    {{ form.nis(class_="form-control", placeholder=form.nis.label.text, autocomplete="off") }}
-                </div>
-                <div class="form-group">
-                    {{ form.nisn.label(class_="sr-only") }}
-                    {{ form.nisn(class_="form-control", placeholder=form.nisn.label.text, autocomplete="off") }}
-                </div>
-                <button class="btn btn-md btn-primary btn-block mt-3" type="submit">Konfirmasi</button>
-              </form>
-            </div>
-          </div>
+<div class="min-vh-100 d-flex flex-column pb-2 pt-5">
+    <div class="mx-auto mt-auto card bg-dark text-white px-2 box" id="mainForm" style="max-width: 85vw;">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="h4 card-header text-center font-weight-bold">
+            Pemilos <sub>v1.1</sub>
+          </h1>
         </div>
+      </div>
+      <div class="row card-body">
+        <div class="col-12 py-2">
+          <h2 class="h5"><i class="far fa-id-card"></i> Student Identity Verification</h2>
+          <hr>
+          <p>Please verify your student identity by filling the form below.</p>
+        </div>
+        <div class="col-12 py-2">
+          <form method="POST" action="/election/verification">
+            {% if errors|length > 0 %}
+                <span class="text-danger">Error!</span>
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                {{ form.nis.label(class_="form-label") }}
+                {{ form.nis(class_="form-control", placeholder="123xxxxxx", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class_="form-label") }}
+                {{ form.password(class_="form-control", placeholder="********", autocomplete="off") }}
+            </div>
+            <button class="btn btn-md btn-primary btn-block mt-3" type="submit">Confirm</button>
+          </form>
+        </div>
+      </div>
     </div>
+    <div class="mx-auto mt-auto d-flex p-4">
+      <div class="card bg-dark text-white box py-2 px-3 text-center">
+          <footer>© 2021 8ICT, Alvito Raidhy Trinanda</footer>
+      </div>
+  </div>
 </div>
 {% endblock %}

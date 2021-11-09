@@ -1,8 +1,8 @@
 from sanic import response
-from sanic.exceptions import abort
+from sanic.exceptions import SanicException, abort
 from datetime import datetime
 from urllib.parse import urlencode 
-import csv
+import csv, tempfile
 
 ROWS_PER_PAGE=15
 
@@ -15,12 +15,33 @@ def init(current):
     async def students_table(request):
         page = int(request.args.get('page', 1))
         form = forms.students.FindForm(request.args)
-        form.has_chosen_id.choices += [(x.candidate_number, f'{x.name.split()[0]} ({x.candidate_number})') for x in (await models.Candidate.all())]
-        filter_dict = dict()
-        query = ()
+        form.has_chosen_id.choices += [(x.candidate_number, f'{x.candidate_number}') for x in (await models.Candidate.all())]
+        query = []
         if form.validate():
-            query = [(key,value) for key, value in form.data.items() if value]
-            filter_dict = {f'{key}__icontains': value for key, value in query}
+            data, filter_dict = { key: value for key, value in form.data.items() }, dict()
+            try:
+                has_chosen_id = int(data['has_chosen_id'])
+                filter_dict['has_chosen_id__icontains'] = has_chosen_id
+
+            except:
+                if form.has_chosen_id.data == 'any':
+                    filter_dict['has_chosen_id__not_isnull'] = True
+                elif form.has_chosen_id.data == 'none':
+                    filter_dict['has_chosen_id__isnull'] = True
+            
+            try:
+                grade = int(data['grade'])
+                filter_dict['grade'] = grade
+
+            except:
+                if form.grade.data == 'all':
+                    pass
+            
+            data.pop('has_chosen_id', None)
+            data.pop('grade', None)
+
+            query = [(key, data[key]) for key in data.keys() if data[key]]
+            filter_dict = {**filter_dict, **{ f'{ key}__icontains': value for key, value in query } }
             
             rows = await models.Student.filter(**filter_dict).offset((page-1) * ROWS_PER_PAGE).limit(ROWS_PER_PAGE)
         
@@ -36,6 +57,45 @@ def init(current):
             previous=urlencode((*query, ('page', page - 1))) if page > 1 else None
         )
 
+    @app.route("/admin/students/batch-delete", methods=['POST'])
+    @helpers.authorized('admin')
+    async def students_batch_delete(request):
+        form = forms.students.FindForm(request.form or None)
+        form.has_chosen_id.choices += [(x.candidate_number, f'{x.candidate_number}') for x in (await models.Candidate.all())]
+
+        if form.validate():
+            data, filter_dict = { key: value for key, value in form.data.items() }, dict()
+            try:
+                has_chosen_id = int(data['has_chosen_id'])
+                filter_dict['has_chosen_id__icontains'] = has_chosen_id
+
+            except:
+                if form.has_chosen_id.data == 'any':
+                    filter_dict['has_chosen_id__not_isnull'] = True
+                elif form.has_chosen_id.data == 'none':
+                    filter_dict['has_chosen_id__isnull'] = True
+            
+            try:
+                grade = int(data['grade'])
+                filter_dict['grade'] = grade
+
+            except:
+                if form.grade.data == 'all':
+                    pass
+            
+            data.pop('has_chosen_id', None)
+            data.pop('grade', None)
+
+            query = [(key, data[key]) for key in data.keys() if data[key]]
+            filter_dict = {**filter_dict, **{ f'{ key}__icontains': value for key, value in query } }
+            
+            await models.Student.filter(**filter_dict).delete()
+
+            return response.redirect('/admin/students')
+        
+        else: 
+            raise SanicException('Bad Request', 400)
+
     @app.route("/admin/students/create", methods=['GET', 'POST'])
     @helpers.authorized('admin')
     async def students_create(request):
@@ -46,9 +106,11 @@ def init(current):
             try:
                 data = { **form.data }
 
+
                 data['has_chosen_id'] = data['has_chosen_id'] or None
 
                 new_student = models.Student(**data)
+                new_student.set_password(data['password'])
                 await new_student.save()
 
                 return response.redirect('/admin/students')
@@ -66,7 +128,7 @@ def init(current):
         if row:
             return jinja.render("admin/students/read.html", request, row=row)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/<id:int>/edit", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -86,6 +148,10 @@ def init(current):
                     data['has_chosen_id'] = data['has_chosen_id'] or None
 
                     row.update_from_dict(data)
+
+                    if data.get('password'):
+                        row.set_password(data['password'])
+                        
                     await row.save()
                     return response.redirect(f'/admin/students/{row.id}')
 
@@ -96,7 +162,7 @@ def init(current):
             return jinja.render("admin/students/edit.html", request, row=row, form=form, errors=errors)
 
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/<id:int>/delete", methods=['GET', 'POST'])
     @helpers.authorized('admin')
@@ -120,12 +186,13 @@ def init(current):
 
             return jinja.render("admin/students/delete.html", request, row=row, form=form, errors=errors)
         else:
-            abort(404)
+            raise SanicException('Not Found', 404)
 
     @app.route("/admin/students/import-csv", methods=['GET', 'POST'])
     @helpers.authorized('admin')
     async def students_import_csv(request):
         form = forms.students.ImportCSVForm(request.form)
+        csv_format = ['nis','name','grade','classname','password','has_chosen_id']
         errors = []
         result = None
         if request.method == 'POST' and form.validate():
@@ -138,23 +205,22 @@ def init(current):
                     # 5 MB limit
                     if len(file_body) < (5 * 1024 * 1024):
                         csv_reader = csv.reader(file_body.decode("utf-8").splitlines(), delimiter=',')
-                        i = 1
                         success_insert = 0
+                        i = 0
                         for row in csv_reader:
-                            formatted_row = [x.strip() for x in row]
-                            data = {
-                                'nis': formatted_row[0],
-                                'nisn': formatted_row[1],
-                                'name': formatted_row[2],
-                                'classname': formatted_row[3],
-                                'has_chosen_id': formatted_row[4],
-                            }
-                            try:
-                                new_student = models.Student(**data)
-                                await new_student.save()
-                                success_insert += 1
-                            except Exception as e:
-                                errors.append(f'row {i}: {repr(e)}')
+                            if i > 0:
+                                try:
+                                    formatted_row = [x.strip() for x in row]
+                                    data = { csv_format[x]: formatted_row[x] for x in range(len(csv_format)) }
+
+                                    if not data['has_chosen_id']: data['has_chosen_id'] = None
+                                    
+                                    new_student = models.Student(**data)
+                                    new_student.set_password(data['password'])
+                                    await new_student.save()
+                                    success_insert += 1
+                                except Exception as e:
+                                    errors.append(f'row {i}: {repr(e)}')
                             
                             i += 1
                         
@@ -168,4 +234,4 @@ def init(current):
                 print(repr(e))
                 errors.append('Invalid submitted data!')
       
-        return jinja.render("admin/students/import-csv.html", request, form=form, errors=errors, result=result)
+        return jinja.render("admin/students/import-csv.html", request, form=form, errors=errors, result=result, csv_format=str(csv_format))

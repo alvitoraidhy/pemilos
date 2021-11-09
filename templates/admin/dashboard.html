@@ -67,35 +67,39 @@
         <h6 class="m-0 font-weight-bold text-primary">Status</h6>
       </div>
       <div class="card-body row">
-        <div class="col-6">
+        <div class="col-12 my-2">
           <div class="card shadow h-100 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="h5 font-weight-bold text-gray-800">Election</div>
                   <div class="text-sm font-weight-bold mb-1">
-                    Status: <span id="election-status">Loading...</span> <br>
-                    Start: <span id="election-start">Loading...</span> <br>
-                    End: <span id="election-end">Loading...</span> <br>
+                    <p>
+                      Status: <span id="election-status">Loading...</span> <br>
+                      Start: <span id="election-start">Loading...</span> <br>
+                      End: <span id="election-end">Loading...</span> <br>
+                      Remaining Time: <span id="election-remaining-time">00:00:00</span> 
+                    </p>
                   </div>
-                  <div id="election-countdown"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-12 my-2">
           <div class="card shadow h-100 py-2">
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="h5 font-weight-bold text-gray-800">Result</div>
                   <div class="text-sm font-weight-bold mb-1">
-                    Status: <span id="result-status">Loading...</span> <br>
-                    Start: <span id="result-start">Loading...</span> <br>
-                    End: <span id="result-end">Loading...</span> <br>
+                    <p>
+                      Status: <span id="result-status">Loading...</span> <br>
+                      Start: <span id="result-start">Loading...</span> <br>
+                      End: <span id="result-end">Loading...</span> <br>
+                      Remaining Time: <span id="result-remaining-time">00:00:00</span> 
+                    </p>
                   </div>
-                  <div id="result-countdown"></div>
                 </div>
               </div>
             </div>
@@ -109,7 +113,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Result</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Real-Time Result</h6>
       </div>
       <!-- Card Body -->
       <div class="card-body">
@@ -156,4 +160,5 @@
 
 <!-- Page level custom scripts -->
 <script src="/static/js/dashboard/statistics.js"></script>
+<script src="/static/js/result.js"></script>
 {% endblock %}

@@ -1,13 +1,15 @@
-sanic
-sanic_jinja2
-cffi
-wtforms
-itsdangerous
-werkzeug
+sanic==21.9.0
+sanic-jinja2==0.10.0
+cffi==1.14.6
+cryptography==35.0.0
+WTForms==2.3.3
+itsdangerous==2.0.1
+Werkzeug==2.0.1
 
-asyncpg
-aiosqlite
-tortoise-orm
-pydantic
+asyncpg==0.24.0
+aiosqlite==0.17.0
+tortoise-orm==0.17.7
+pydantic==1.8.2
 
-asyncclick
+anyio==3.3.2
+asyncclick==8.0.1.3

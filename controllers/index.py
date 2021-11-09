@@ -1,5 +1,5 @@
 def init(current):
-    app, jinja, models, forms = current.app, current.jinja, current.models, current.forms
+    app, jinja = current.app, current.jinja
 
     @app.route("/", methods=['GET', 'POST'])
     async def index(request):

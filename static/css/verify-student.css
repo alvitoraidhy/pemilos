@@ -1,15 +1,8 @@
-html, body {
-	min-height: 100vh;
-}
-
 body {
-	background-color: #f6f4e6;
+	background: #575f67;  /* fallback for old browsers */
 }
 
-form {
-	background-color: white;
-}
-
-#logo {
-	height: 250px;
+.box {
+	border: 0;
+	box-shadow: 3px 3px 4px #000;
 }
