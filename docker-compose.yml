@@ -1,5 +1,22 @@
 services:
   pemilos:
     build: ./services/pemilos
+    depends_on:
+      postgres: { condition: service_healthy }
     ports:
       - 8000:8000
+    environment:
+      - DB_URL=postgres://${DB_USER}:${DB_PASS}@postgres:5432/${DB_NAME}
+      - SECRET_KEY
+
+  postgres:
+    image: postgres:15.1-alpine3.17
+    healthcheck:
+      test: pg_isready -U ${DB_USER}
+      interval: 5s
+      timeout: 10s
+      retries: 120
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}

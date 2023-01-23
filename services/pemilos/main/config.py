@@ -7,11 +7,14 @@ CURRENT_APP_ENV = os.environ.get("ENV", "development")
 
 
 class BaseConfig:
-    DB_URL = os.environ.get("DB_URL")
+    DB_URL = os.environ["DB_URL"]
 
+    TEMPLATE_DIR = str(Path(__file__).resolve().parent.joinpath("templates"))
     STATIC_DIR = str(Path(__file__).resolve().parent.joinpath("static"))
     UPLOAD_DIR = str(Path("/mnt/pemilos/").joinpath("uploads"))
     UPLOAD_URL = "/uploads"
+
+    TEMPLATING_PATH_TO_TEMPLATES = TEMPLATE_DIR
 
     @classmethod
     def to_dict(cls):
