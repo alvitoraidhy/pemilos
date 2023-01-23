@@ -1,0 +1,6 @@
+services:
+  pemilos:
+    command: --dev --host 0.0.0.0 main:app
+    volumes:
+      - ./services/pemilos/main:/usr/src/pemilos/main:ro
+      - ./volumes/development/pemilos:/mnt/pemilos:rw

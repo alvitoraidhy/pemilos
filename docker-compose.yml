@@ -1,0 +1,5 @@
+services:
+  pemilos:
+    build: ./services/pemilos
+    ports:
+      - 8000:8000
